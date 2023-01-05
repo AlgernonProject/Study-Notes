@@ -128,3 +128,33 @@ and evaluating first the operator, it will result in
 The expression _x_ will be evaluated into _0_, but _(p)_ will start an infinite recursion and the program will crash due to stack overflow.
 
 If on the other hand the interpreter uses normal-order evaluation, it will only evaluate the operands when necessary, therefore first it substitutes operand expressions for parameters until it obtains an expression involving only primitive operators, and then it will perform the evaluations. This means that after substituting _test_, it will evaluate the conditional, verifying that _x_ is equal to _0_, returning _0_.
+
+### __Exercise 1.6__: Alyssa P. Hacker doesn't see why _if_ needs to be provided as a special form. "Why can't i just define it as an ordinary procedure in terms of _cond_?" she asks. Alyssa's friend Eva Lu Ator claims this can indeed be done, and she defines a new version of _if_:
+
+```lisp
+(define (new-if predicate then-clause else-clause)
+    (cond (predicate then-clause)
+          (else else-clause)))
+```
+
+Eva demonstrates the program for Alyssa:
+
+```
+(new-if (= 2 3) 0 5)
+5
+(new-if (= 1 1) 0 5)
+9
+```
+
+Delighted, Alyssa uses new-if to rewrite the square-root program:
+
+```lisp
+(define (sqrt-iter guess x)
+   (new-if (good-enough? guess x)
+           guess
+           (sqrt-iter (improve guess x) x)))
+```
+
+What happens when alyssa attempts to use this to compute square roots? Explain.
+
+#### __Answer:__
