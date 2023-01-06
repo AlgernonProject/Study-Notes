@@ -158,3 +158,9 @@ Delighted, Alyssa uses new-if to rewrite the square-root program:
 What happens when alyssa attempts to use this to compute square roots? Explain.
 
 #### __Answer:__
+
+The procedure _new-if_ will be evaluated as a normal function, following the evaluation logic for normal procedures where, in the case of an interpreter that uses applicative-order evaluation, will first evaluate each operand and then substitute the final expressions into the operation. This will result in an infinite recursion due to the fact that one of the arguments is another call to _new-if_. 
+
+What if it uses normal-order evaluation?
+
+The _if_ statement, as a special form, will following a specific evaluation logic that avoids infinite recursion and stack overflow.
