@@ -164,3 +164,13 @@ The procedure _new-if_ will be evaluated as a normal function, following the eva
 What if it uses normal-order evaluation?
 
 The _if_ statement, as a special form, will following a specific evaluation logic that avoids infinite recursion and stack overflow.
+
+### __Exercise 1.7__: The _good-enough?_ test used in computing square roots will not be very effective for finding the square roots of very small numbers. Also, in real computers, arithmetic operations are almost always perormed with limited precision. This makes our test inadequate for very large numbers. Explain these statements, with examples showing how the test fails for small and large numbers. An alternative strategy for implementing _good-enough?_ is to watch how _guess_ changes from one iteration to the next and to stop when the chage is a very small fraction of the guess. Design a square-root procedure that uses this kind of end test. Does this work better or small and large numbers?
+
+#### __Answer:__
+
+__Passe para o inglês depois.__
+
+Considere $x = 10^{-10}$. A raiz quadrada de $x$ é $y = 10^{-5}$. Se tomarmos um valor de chute $z > y$ qualquer, a tendência do algoritmo é que ele convirja para o valor $y$ conforme tira-se a média entre $z$ e $x / z$ que é bastante pequeno. Todavia, o erro é calculado entre $x$ e $z^2$, e por serem valores pequenos, devido ao produto $z \cdot z$ muito rapidamente veremos esse erro menor que o _threshold_ fixado na função _good-enough?_, ainda que o valor de $z$ esteja distante do valor real $y$.
+
+Para valores muito grandes, digamos $x = 2 \cdot 10^{50}$ acontece o problema contrário, em que o erro será sempre um valor de uma ordem de grandeza muito superior ao valor de thershold estipulado. Para esse valor de $x$, por exemplo, na iteração de número $i = 150$ teríamos um valor de erro na ordem de grandeza de $10^{34}$. Se representarmos as tentativas $z$ na forma $m.n \times 10^p$, onde $p$ é um natural, $m$ é a parte inteira e $n$ a parte fracionária do número multiplicando a potência de $10$, pode ser possível que o sistema não consiga representar o valor mais próximo da raiz $y$ e, com isso, o programa nunca termine pois a maior representação numérica possível tem como resultado um erro excessivamente grande.
