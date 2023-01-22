@@ -174,3 +174,30 @@ __Passe para o inglês depois.__
 Considere $x = 10^{-10}$. A raiz quadrada de $x$ é $y = 10^{-5}$. Se tomarmos um valor de chute $z > y$ qualquer, a tendência do algoritmo é que ele convirja para o valor $y$ conforme tira-se a média entre $z$ e $x / z$ que é bastante pequeno. Todavia, o erro é calculado entre $x$ e $z^2$, e por serem valores pequenos, devido ao produto $z \cdot z$ muito rapidamente veremos esse erro menor que o _threshold_ fixado na função _good-enough?_, ainda que o valor de $z$ esteja distante do valor real $y$.
 
 Para valores muito grandes, digamos $x = 2 \cdot 10^{50}$ acontece o problema contrário, em que o erro será sempre um valor de uma ordem de grandeza muito superior ao valor de thershold estipulado. Para esse valor de $x$, por exemplo, na iteração de número $i = 150$ teríamos um valor de erro na ordem de grandeza de $10^{34}$. Se representarmos as tentativas $z$ na forma $m.n \times 10^p$, onde $p$ é um natural, $m$ é a parte inteira e $n$ a parte fracionária do número multiplicando a potência de $10$, pode ser possível que o sistema não consiga representar o valor mais próximo da raiz $y$ e, com isso, o programa nunca termine pois a maior representação numérica possível tem como resultado um erro excessivamente grande.
+
+
+### __Exercise 1.8__: Newton's method for cube roots is based on the fact that if _y_ is an approximation to the cube root of _x_, then a better approximation is given by the value $(x/y^2 + 2y)/3$. Use this formula to implement a cube-root procedure analogous to the square-root procedure. 
+
+#### __Answer:__
+
+```lisp
+(define (cubert-iter guess x)
+    (if (good-enough? guess x)
+        guess
+        (cubert-iter (improve guess x) x)))
+
+(define (good-enough? guess x)
+    (< (abs (- (cube guess) x)) 0.001))
+
+(define (improve guess x)
+    (/ (+ (/ x (square guess))
+          (* 2 guess))
+       3))
+
+(define (cube x)
+    (* (* x x) 
+        x))
+
+(define (square x)
+    (* x x))
+```
